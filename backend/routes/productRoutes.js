@@ -1,5 +1,5 @@
 import express from 'express'
-const router= express.Router()
+const router = express.Router()
 import { getProductById, getProducts } from '../controllers/productController.js'
 
 
@@ -15,7 +15,7 @@ export default router
 
 // router.get('/:id', asyncHandler( async(req,res) => {
 //     const product = await Product.findById(req.params.id)
-    
+
 //     if(product) {
 //         res.json(product)
 //     } else {

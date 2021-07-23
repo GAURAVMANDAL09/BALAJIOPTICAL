@@ -7,10 +7,11 @@ import colors from 'colors'
 // const dotenv=require('./dotenv')
 //const products=require('./data/products')
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+
+
 dotenv.config()
 
 connectDB()
