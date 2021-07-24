@@ -14,16 +14,15 @@ export const OrderScreen = ({ match }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
   if (!loading) {
 
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2);
-    };
     //calculating prices
     order.itemsPrice = addDecimals(order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty, 0)
-    );
-
+    )
   }
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
@@ -92,7 +91,7 @@ export const OrderScreen = ({ match }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ₹{item.price} = ₹{item.qty * item.price}
+                          {item.qty} x ₹{item.price} = ₹{addDecimals(item.qty * item.price)}
                         </Col>
                       </Row>
                     </ListGroup.Item>
