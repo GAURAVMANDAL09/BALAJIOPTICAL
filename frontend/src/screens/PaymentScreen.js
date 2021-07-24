@@ -13,7 +13,7 @@ const PaymentScreen = ({ history }) => {
     history.push('/shipping');
   }
 
-  const [paymentMethod, setPaymentMethod] = useState('Paypal');
+  const [paymentMethod, setPaymentMethod] = useState('');
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ const PaymentScreen = ({ history }) => {
             ></Form.Check>
           </Col>
         </Form.Group>
-        <Button type='submit' variant="primary" style={{ marginTop: ".5rem" }}>
+        <Button type='submit' variant="primary" style={{ marginTop: ".5rem" }} disabled={paymentMethod === ''}>
           Continue
         </Button>
       </Form>
