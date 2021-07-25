@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message.js";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader.js";
-import { getOrderDetails } from "../actions/orderActions.js";
+import { deliverOrder, getOrderDetails } from "../actions/orderActions.js";
+import { ORDER_DELIVER_RESET } from "../constants/orderConstants.js";
 
 export const OrderScreen = ({ match }) => {
 
@@ -13,6 +14,16 @@ export const OrderScreen = ({ match }) => {
   const dispatch = useDispatch();
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+
+  // order pay
+
+
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
@@ -24,9 +35,19 @@ export const OrderScreen = ({ match }) => {
       (acc, item) => acc + item.price * item.qty, 0)
     )
   }
+
+
+
   useEffect(() => {
     dispatch(getOrderDetails(orderId));
   }, [dispatch, orderId]);
+
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order))
+  }
+
+
 
   return loading ? (
     <Loader />
@@ -140,6 +161,15 @@ export const OrderScreen = ({ match }) => {
                   <Col>₹{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
+              {loadingDeliver && <Loader></Loader>}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button type='button' className='btn btn-block' onClick={deliverHandler}>
+                    Mark as Deliver
+                  </Button>
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>
